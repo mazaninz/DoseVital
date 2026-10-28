@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#E1EBCD">
+<title>DoseVital — Exercícios com a dose certa para a sua saúde</title>
+<link rel="icon" href="img/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="toast" class="site-toast" role="status" aria-live="polite"></div>
+
+<header class="main-header no-print">
+ <div class="header-container">
+  <div class="brand">
+   <img class="brand-logo" src="img/logo.jpg" alt="DoseVital">
+   <div class="brand-text"><h1>DoseVital</h1><p class="brand-sub">Prescrição de Exercícios &amp; Fisioterapia</p></div>
+  </div>
+  <nav class="main-nav">
+   <button class="nav-btn active" data-p="inicio">Prescrição &amp; Montador</button>
+   <button class="nav-btn" data-p="busca">Busca</button>
+   <button class="nav-btn" data-p="cadastros">Cadastros</button>
+   <button class="nav-btn" data-p="pacientes">Gestão de Pacientes</button>
+  </nav>
+ </div>
+</header>
+
+<main class="app-container no-print">
+ <section id="p-inicio" class="tab-content active">
+  <div class="layout-two-columns">
+   <div class="column-left">
+    <div class="card body-map-card-large">
+     <div class="card-header space-between"><h3>Mapeamento Anatômico</h3><span class="active-region-tag" id="sel-tag">Todas as Regiões</span></div>
+     <div class="view-selector" id="vistas"></div>
+     <div class="body-viewer-container-large"><div class="fig" id="fig"></div></div>
+    </div>
+
+    <div class="card unified-prescription-card">
+     <div class="card-header space-between"><h3>Paciente Ativo &amp; Ficha de Prescrição</h3>
+      <div class="sheet-actions-top"><button id="b-ex" class="btn btn-secondary btn-sm">Carregar ficha de exemplo</button> <button id="b-clr" class="btn btn-outline-danger btn-sm">Limpar ficha</button></div>
+     </div>
+     <div class="form-row">
+      <div class="form-group flex-2"><label for="f-pac">Selecionar Paciente:</label><select id="f-pac" class="form-control"></select></div>
+      <div class="form-group flex-1"><label for="f-idade">Idade:</label><input id="f-idade" class="form-control" readonly placeholder="-"></div>
+     </div>
+     <div class="form-group"><label for="f-diag">Diagnóstico Clínico / Observação:</label><input id="f-diag" class="form-control" placeholder="Ex.: Reabilitação de LCA — joelho"></div>
+     <div class="form-row">
+      <div class="form-group flex-2"><label for="f-fis">Fisioterapeuta responsável:</label><select id="f-fis" class="form-control"></select></div>
+      <div class="form-group flex-1"><label for="f-crefito">CREFITO:</label><input id="f-crefito" class="form-control" readonly placeholder="-"></div>
+     </div>
+     <hr class="section-divider">
+     <div class="sheet-summary space-between"><strong>Exercícios Selecionados:</strong><span id="f-n">0 exercícios na lista</span></div>
+     <div class="active-prescription-list" id="itens"></div>
+     <p class="note">✓ Salva automaticamente neste navegador. Para PDF, escolha “Salvar como PDF” na impressão.</p>
+     <div class="sheet-footer">
+      <button id="b-save" class="btn btn-success btn-block">Salvar Ficha no Histórico</button>
+      <button id="b-print" class="btn btn-primary btn-block">Imprimir / Salvar PDF</button>
+     </div>
+    </div>
+   </div>
+
+   <div class="column-right">
+    <div class="card exercises-card">
+     <div class="card-header space-between"><h3>Biblioteca de Exercícios</h3><span class="badge" id="cnt-lib"></span></div>
+     <div class="filter-bar"><input type="search" id="q-lib" class="form-control" placeholder="Pesquisar exercício por nome, equipamento ou região…" autocomplete="off"></div>
+     <div class="filter-pills-container" id="regs"></div>
+     <div class="exercise-list" id="grid"></div>
+    </div>
+   </div>
+  </div>
+ </section>
+
+ <section id="p-busca" class="tab-content">
+  <div class="card">
+   <div class="card-header"><h3>Busca de Exercícios</h3></div>
+   <input type="search" id="q" class="form-control big" placeholder="Digite o nome do exercício, equipamento ou região…" autocomplete="off">
+   <div id="filtros"></div>
+   <p class="count" id="rc"></p>
+   <div class="exercise-list tall" id="sgrid"></div>
+  </div>
+ </section>
+
+ <section id="p-cadastros" class="tab-content">
+  <div class="grid-cadastros">
+   <div class="card">
+    <div class="card-header"><h3>Cadastro de Paciente</h3></div>
+    <div class="form-group"><label for="n-nome">Nome Completo:*</label><input id="n-nome" class="form-control" placeholder="Ex.: Roberto Silva"></div>
+    <div class="form-row">
+     <div class="form-group flex-1"><label for="n-idade">Idade:*</label><input id="n-idade" type="number" min="0" class="form-control" placeholder="Ex.: 40"></div>
+     <div class="form-group flex-1"><label for="n-tel">Telefone:</label><input id="n-tel" class="form-control" placeholder="(16) 99888-7766"></div>
+    </div>
+    <div class="form-group"><label for="n-diag">Diagnóstico Inicial:</label><textarea id="n-diag" class="form-control" rows="3" placeholder="Histórico clínico…"></textarea></div>
+    <button id="b-novo" class="btn btn-primary">Salvar Paciente</button>
+   </div>
+   <div class="card">
+    <div class="card-header"><h3>Cadastro de Fisioterapeuta</h3></div>
+    <div class="form-group"><label for="m-nome">Nome Completo:*</label><input id="m-nome" class="form-control" placeholder="Ex.: Dra. Ana Paula Souza"></div>
+    <div class="form-row">
+     <div class="form-group flex-1"><label for="m-crefito">CREFITO:*</label><input id="m-crefito" class="form-control" placeholder="Ex.: 12345-F"></div>
+     <div class="form-group flex-1"><label for="m-esp">Especialidade:</label><input id="m-esp" class="form-control" placeholder="Ex.: Ortopedia"></div>
+    </div>
+    <div class="form-row">
+     <div class="form-group flex-1"><label for="m-tel">Telefone:</label><input id="m-tel" class="form-control" placeholder="(16) 99888-7766"></div>
+     <div class="form-group flex-1"><label for="m-email">E-mail:</label><input id="m-email" type="email" class="form-control" placeholder="nome@clinica.com"></div>
+    </div>
+    <button id="b-fis" class="btn btn-primary">Salvar Fisioterapeuta</button>
+   </div>
+  </div>
+  <div class="card">
+   <div class="card-header space-between"><h3>Fisioterapeutas cadastrados</h3><span class="badge" id="fc"></span></div>
+   <div class="table-responsive" id="tab-fis"></div>
+  </div>
+ </section>
+
+ <section id="p-pacientes" class="tab-content">
+  <div>
+   <div class="card">
+    <div class="card-header space-between"><h3>Pacientes da Clínica</h3><span class="badge" id="pc"></span></div>
+    <div class="table-responsive" id="tabela"></div>
+    <div class="history-panel">
+     <div class="card-header space-between"><h3>Histórico do Paciente</h3><strong id="h-nome">Nenhum paciente selecionado</strong></div>
+     <div id="h-body"></div>
+    </div>
+   </div>
+  </div>
+ </section>
+</main>
+
+<div id="print" class="print-only"></div>
+<script src="js/dados.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
